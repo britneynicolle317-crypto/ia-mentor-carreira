@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IA Mentor de Carreira</title>
+  <title>IA Mentor de Carreira - Simulador</title>
   <style>
     body {
       font-family: Arial;
@@ -15,17 +15,17 @@
     }
 
     .card {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.8);
       padding: 25px;
       border-radius: 15px;
-      width: 320px;
+      width: 340px;
       text-align: center;
     }
 
     input, select {
       width: 90%;
       padding: 8px;
-      margin: 8px 0;
+      margin: 6px 0;
       border-radius: 8px;
       border: none;
     }
@@ -43,6 +43,11 @@
     button:hover {
       background: #ff2e78;
     }
+
+    #resultado {
+      margin-top: 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -52,15 +57,28 @@
 
   <input type="text" id="nome" placeholder="Seu nome">
 
-  <select id="interesse">
-    <option value="">Escolha sua área de interesse</option>
+  <select id="nivel">
+    <option value="">Seu nível</option>
+    <option value="iniciante">Iniciante</option>
+    <option value="intermediario">Intermediário</option>
+  </select>
+
+  <select id="area">
+    <option value="">Área de interesse</option>
     <option value="front">Front-end</option>
     <option value="back">Back-end</option>
     <option value="dados">Dados</option>
     <option value="mobile">Mobile</option>
   </select>
 
-  <button onclick="gerarPlano()">Gerar Plano</button>
+  <select id="tempo">
+    <option value="">Tempo disponível por dia</option>
+    <option value="1">1 hora</option>
+    <option value="2">2 horas</option>
+    <option value="3">3+ horas</option>
+  </select>
+
+  <button onclick="gerarPlano()">Gerar Plano Personalizado</button>
 
   <p id="resultado"></p>
 </div>
@@ -68,30 +86,40 @@
 <script>
 function gerarPlano() {
   let nome = document.getElementById("nome").value;
-  let interesse = document.getElementById("interesse").value;
+  let nivel = document.getElementById("nivel").value;
+  let area = document.getElementById("area").value;
+  let tempo = document.getElementById("tempo").value;
   let resultado = document.getElementById("resultado");
 
-  if(nome === "" || interesse === "") {
+  if(nome === "" || nivel === "" || area === "" || tempo === "") {
     resultado.textContent = "Preencha todas as informações!";
     return;
   }
 
-  let plano = "";
+  let plano = "Olá " + nome + "! ";
 
-  if(interesse === "front") {
-    plano = "Estude HTML, CSS e JavaScript. Crie projetos e monte um portfólio.";
+  if(nivel === "iniciante") {
+    plano += "Como você está começando, foque primeiro em lógica de programação. ";
+  } else {
+    plano += "Como você já tem base, comece criando projetos práticos. ";
+  }
+
+  if(area === "front") {
+    plano += "Estude HTML, CSS e JavaScript. ";
   } 
-  else if(interesse === "back") {
-    plano = "Aprenda lógica de programação, APIs, banco de dados e uma linguagem como Node ou Java.";
+  else if(area === "back") {
+    plano += "Aprenda APIs, banco de dados e Node ou Java. ";
   }
-  else if(interesse === "dados") {
-    plano = "Estude Python, SQL, análise de dados e Power BI.";
+  else if(area === "dados") {
+    plano += "Estude Python, SQL e análise de dados. ";
   }
-  else if(interesse === "mobile") {
-    plano = "Aprenda desenvolvimento Android ou React Native.";
+  else if(area === "mobile") {
+    plano += "Aprenda desenvolvimento Android ou React Native. ";
   }
 
-  resultado.textContent = nome + ", seu plano inicial: " + plano;
+  plano += "Com " + tempo + " hora(s) por dia, mantenha constância e pratique sempre.";
+
+  resultado.textContent = plano;
 }
 </script>
 
